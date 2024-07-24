@@ -26,28 +26,50 @@
 # (кто атаковал и сколько здоровья осталось у противника) и объявляет победителя.
 import random
 
-class Hero():
+class Hero:
     def __init__(self, name, health=100, attack_power=20):
         self.name = name
         self.health = health
         self.attack_power = attack_power
-    def attack(self, other):
-        self.other = other
-        other.health-= self.attack_power
 
+    def attack(self, other):
+        damage = random.randint(1, self.attack_power)
+        other.health -= damage
+        return damage
     def is_alive(self):
-        if self.health in health > 0:
-            return True
+        if self.health > 0:
+           return True
         else: False
 class Game():
-    def __init__(self,player, computer):
-        self.player = Hero(player)
-        self.computer = Hero(computer)
+    def __init__(self, player_name, computer_name):
+        self.player = Hero(player_name)
+        self.computer = Hero(computer_name)
 
     def start(self):
-        while self.health > 0 and
+        print(f'Игра начинается! {self.player.name} против {self.computer.name}')
+
+        while self.player.is_alive() and self.computer.is_alive():
+
+            print(f'Ход {self.player.name}')
+            player_damage = self.player.attack(self.computer)
+            print(f'{self.player.name} атаковал {self.computer.name} и нанес {player_damage} урона.')
+            print(f'У {self.computer.name} осталось {self.computer.health} здоровья.')
+
+            if not self.computer.is_alive():
+                print(f'{self.computer.name} умер. {self.player.name} победил!')
+                break
 
 
-# #     Методы:# #     start(): начинает игру, чередует ходы игрока и компьютера,
-# пока один из героев не умрет. Выводит информацию о каждом ходе
-# (кто атаковал и сколько здоровья осталось у противника) и объявляет победителя.
+            print(f'Ход {self.computer.name}')
+            computer_damage = self.computer.attack(self.player)
+            print(f'{self.computer.name} атаковал {self.player.name} и нанес {computer_damage} урона.')
+            print(f'У {self.player.name} осталось {self.player.health} здоровья.')
+
+            if not self.player.is_alive():
+                print(f'{self.player.name} умер. {self.computer.name} победил!')
+                break
+
+hero = Hero('Спанч боб', 100, 15)
+computer = Hero('Система',100,24)
+game = Game('Спанч боб','Система')
+game.start()
